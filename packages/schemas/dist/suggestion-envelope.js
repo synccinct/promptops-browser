@@ -44,6 +44,6 @@ exports.SuggestionEnvelopeSchema = zod_1.z.object({
     cards: zod_1.z.array(exports.SuggestionCardSchema),
     variants: zod_1.z.array(exports.PromptVariantSchema),
     trace: zod_1.z.array(exports.SuggestionTraceSchema),
-    createdAt: zod_1.z.date(),
-    updatedAt: zod_1.z.date(),
+    createdAt: zod_1.z.string().datetime(),
+    updatedAt: zod_1.z.string().datetime(),
 });

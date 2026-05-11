@@ -7,6 +7,14 @@ import { useSidePanelStore } from "./stores/sidepanel-store";
 export const App: React.FC = () => {
   const { activeSession, currentDraft, suggestions, isAnalyzing } = useSidePanelStore();
 
+  const handleApplyPatch = (card: any) => {
+    if (!card.actionPatch) return;
+    chrome.runtime.sendMessage({
+      type: "APPLY_PATCH",
+      payload: { patch: card.actionPatch }
+    });
+  };
+
   return (
     <PanelShell>
       <LivePromptCard draft={currentDraft} isAnalyzing={isAnalyzing} />
@@ -17,7 +25,11 @@ export const App: React.FC = () => {
         )}
         
         {suggestions.flatMap(env => env.cards).map(card => (
-          <SuggestionCard key={card.id} card={card} />
+          <SuggestionCard 
+            key={card.id} 
+            card={card} 
+            onApply={() => handleApplyPatch(card)}
+          />
         ))}
       </div>
 

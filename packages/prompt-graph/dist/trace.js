@@ -1,4 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dummy_trace = void 0;
-exports.dummy_trace = true;
+exports.Tracer = void 0;
+class Tracer {
+    traces = [];
+    record(nodeId, reason, state) {
+        this.traces.push({ nodeId, reason, state });
+    }
+    getTraces() {
+        return this.traces;
+    }
+}
+exports.Tracer = Tracer;

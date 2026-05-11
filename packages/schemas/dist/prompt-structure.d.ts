@@ -90,4 +90,6 @@ export declare const PromptStructureSchema: z.ZodObject<{
         parameters: Record<string, unknown>;
     }[] | undefined;
 }>;
-export type ZodPromptStructure = z.infer<typeof PromptStructureSchema>;
+export type PromptVariable = z.infer<typeof PromptVariableSchema>;
+export type ToolDefinition = z.infer<typeof ToolDefinitionSchema>;
+export type PromptStructure = z.infer<typeof PromptStructureSchema>;

@@ -1,1 +1,4 @@
-export declare const dummy_scheduler = true;
+import { GraphNode } from "./node";
+export declare class Scheduler {
+    schedule(nodes: GraphNode[]): GraphNode[][];
+}

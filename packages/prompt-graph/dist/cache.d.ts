@@ -1,1 +1,7 @@
-export declare const dummy_cache = true;
+export declare class GraphCache {
+    private store;
+    get(key: string): any;
+    set(key: string, value: any): void;
+    has(key: string): boolean;
+    clear(): void;
+}

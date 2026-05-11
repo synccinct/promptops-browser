@@ -7,7 +7,7 @@ exports.RequestSuggestionsPayloadSchema = zod_1.z.object({
     draftId: zod_1.z.string(),
     workspaceId: zod_1.z.string().optional(),
     modelProfile: zod_1.z.string(),
-    promptText: zod_1.z.string().optional(),
+    promptText: zod_1.z.string(),
 });
 exports.PromptCapturedPayloadSchema = zod_1.z.object({
     sessionId: zod_1.z.string(),

@@ -128,8 +128,8 @@ export declare const SuggestionsResponseSchema: z.ZodObject<{
             reason: string;
             state: "cached" | "updated" | "pending" | "failed";
         }>, "many">;
-        createdAt: z.ZodDate;
-        updatedAt: z.ZodDate;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         status: "pending" | "failed" | "ready";
         id: string;
@@ -166,8 +166,8 @@ export declare const SuggestionsResponseSchema: z.ZodObject<{
             reason: string;
             state: "cached" | "updated" | "pending" | "failed";
         }[];
-        createdAt: Date;
-        updatedAt: Date;
+        createdAt: string;
+        updatedAt: string;
         promptVersionId?: string | undefined;
     }, {
         status: "pending" | "failed" | "ready";
@@ -205,8 +205,8 @@ export declare const SuggestionsResponseSchema: z.ZodObject<{
             reason: string;
             state: "cached" | "updated" | "pending" | "failed";
         }[];
-        createdAt: Date;
-        updatedAt: Date;
+        createdAt: string;
+        updatedAt: string;
         promptVersionId?: string | undefined;
     }>;
 }, "strip", z.ZodTypeAny, {
@@ -246,8 +246,8 @@ export declare const SuggestionsResponseSchema: z.ZodObject<{
             reason: string;
             state: "cached" | "updated" | "pending" | "failed";
         }[];
-        createdAt: Date;
-        updatedAt: Date;
+        createdAt: string;
+        updatedAt: string;
         promptVersionId?: string | undefined;
     };
 }, {
@@ -287,8 +287,40 @@ export declare const SuggestionsResponseSchema: z.ZodObject<{
             reason: string;
             state: "cached" | "updated" | "pending" | "failed";
         }[];
-        createdAt: Date;
-        updatedAt: Date;
+        createdAt: string;
+        updatedAt: string;
         promptVersionId?: string | undefined;
     };
+}>;
+export declare const SyncSessionRequestSchema: z.ZodObject<{
+    sessionId: z.ZodString;
+    sourceSite: z.ZodString;
+    tabUrl: z.ZodString;
+    conversationTitle: z.ZodNullable<z.ZodOptional<z.ZodString>>;
+    workspaceId: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    sessionId: string;
+    sourceSite: string;
+    tabUrl: string;
+    workspaceId?: string | undefined;
+    conversationTitle?: string | null | undefined;
+}, {
+    sessionId: string;
+    sourceSite: string;
+    tabUrl: string;
+    workspaceId?: string | undefined;
+    conversationTitle?: string | null | undefined;
+}>;
+export declare const RecordDraftRequestSchema: z.ZodObject<{
+    draftId: z.ZodString;
+    rawText: z.ZodString;
+    normalizedText: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    draftId: string;
+    rawText: string;
+    normalizedText: string;
+}, {
+    draftId: string;
+    rawText: string;
+    normalizedText: string;
 }>;

@@ -1,1 +1,3 @@
-export declare const dummy_invalidation = true;
+export declare class InvalidationEngine {
+    computeDirty(currentContext: any, previousContext: any): boolean;
+}

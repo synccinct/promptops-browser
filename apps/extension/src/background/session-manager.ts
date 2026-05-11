@@ -1,15 +1,13 @@
 import { PromptSession, PromptDraft } from "@optiprompt/domain";
+import { storage } from "./storage";
 
 export class SessionManager {
-  private activeSession: PromptSession | null = null;
-  private currentDraft: PromptDraft | null = null;
-
   async getOrCreateSession(sourceSite: string, tabUrl: string, conversationTitle?: string | null): Promise<PromptSession> {
-    if (this.activeSession && this.activeSession.tabUrl === tabUrl) {
-      return this.activeSession;
+    const activeSession = await storage.get<PromptSession>("activeSession");
+    if (activeSession && activeSession.tabUrl === tabUrl) {
+      return activeSession;
     }
 
-    // In a real app, this might call the backend to start a session
     const session: PromptSession = {
       id: crypto.randomUUID(),
       workspaceId: null, // To be resolved via auth
@@ -21,38 +19,39 @@ export class SessionManager {
       lastSeenAt: new Date().toISOString(),
     };
 
-    this.activeSession = session;
+    await storage.set("activeSession", session);
     return session;
   }
 
   async updateDraft(rawText: string, normalizedText: string): Promise<PromptDraft> {
-    if (!this.activeSession) {
+    const activeSession = await storage.get<PromptSession>("activeSession");
+    if (!activeSession) {
       throw new Error("No active session");
     }
 
     const draft: PromptDraft = {
       id: crypto.randomUUID(),
-      sessionId: this.activeSession.id,
+      sessionId: activeSession.id,
       rawText,
       normalizedText,
       createdAt: new Date().toISOString(),
     };
 
-    this.currentDraft = draft;
+    await storage.set("currentDraft", draft);
     return draft;
   }
 
-  getActiveSession() {
-    return this.activeSession;
+  async getActiveSession() {
+    return await storage.get<PromptSession>("activeSession");
   }
 
-  getCurrentDraft() {
-    return this.currentDraft;
+  async getCurrentDraft() {
+    return await storage.get<PromptDraft>("currentDraft");
   }
 
-  clear() {
-    this.activeSession = null;
-    this.currentDraft = null;
+  async clear() {
+    await storage.remove("activeSession");
+    await storage.remove("currentDraft");
   }
 }
 

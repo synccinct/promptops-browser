@@ -35,7 +35,7 @@ async function handleEvent(event: ExtensionEvent, sender: chrome.runtime.Message
       try {
         const draft = await sessionManager.updateDraft(
           event.payload.promptText,
-          event.payload.promptText
+          event.payload.promptText.trim()
         );
 
         chrome.runtime.sendMessage({
@@ -58,6 +58,18 @@ async function handleEvent(event: ExtensionEvent, sender: chrome.runtime.Message
       return { success: true };
     }
 
+    case "APPLY_PATCH": {
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: "APPLY_PATCH",
+            payload: event.payload
+          });
+        }
+      });
+      return { success: true };
+    }
+
     default:
       return { success: false, error: "Unhandled event type" };
   }
@@ -72,9 +84,15 @@ function scheduleSuggestionRequest(sessionId: string, draftId: string, promptTex
     try {
       chrome.runtime.sendMessage({ type: "ANALYSIS_STARTED" }).catch(() => {});
 
-      const response = await fetch("http://localhost:3000/api/extension/suggestions", {
+      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+      const apiToken = import.meta.env.VITE_API_TOKEN || "dev-token-123";
+
+      const response = await fetch(`${baseUrl}/api/extension/suggestions`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiToken}`
+        },
         body: JSON.stringify({
           sessionId,
           draftId,

@@ -236,8 +236,8 @@ export declare const SuggestionEnvelopeSchema: z.ZodObject<{
         reason: string;
         state: "cached" | "updated" | "pending" | "failed";
     }>, "many">;
-    createdAt: z.ZodDate;
-    updatedAt: z.ZodDate;
+    createdAt: z.ZodString;
+    updatedAt: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     status: "pending" | "failed" | "ready";
     id: string;
@@ -274,8 +274,8 @@ export declare const SuggestionEnvelopeSchema: z.ZodObject<{
         reason: string;
         state: "cached" | "updated" | "pending" | "failed";
     }[];
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     promptVersionId?: string | undefined;
 }, {
     status: "pending" | "failed" | "ready";
@@ -313,8 +313,13 @@ export declare const SuggestionEnvelopeSchema: z.ZodObject<{
         reason: string;
         state: "cached" | "updated" | "pending" | "failed";
     }[];
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     promptVersionId?: string | undefined;
 }>;
-export type ZodSuggestionEnvelope = z.infer<typeof SuggestionEnvelopeSchema>;
+export type PromptPatch = z.infer<typeof PromptPatchSchema>;
+export type SuggestionScores = z.infer<typeof SuggestionScoresSchema>;
+export type SuggestionCard = z.infer<typeof SuggestionCardSchema>;
+export type PromptVariant = z.infer<typeof PromptVariantSchema>;
+export type SuggestionTrace = z.infer<typeof SuggestionTraceSchema>;
+export type SuggestionEnvelope = z.infer<typeof SuggestionEnvelopeSchema>;

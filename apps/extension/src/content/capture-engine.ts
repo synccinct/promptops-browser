@@ -3,6 +3,7 @@ import { ExtensionEvent } from "@optiprompt/domain";
 
 export class CaptureEngine {
   private lastCapturedText: string = "";
+  private currentDraftId: string = "";
 
   constructor(private adapter: BaseAdapter) {}
 
@@ -23,34 +24,66 @@ export class CaptureEngine {
     });
 
     // Monitor for changes
-    input.addEventListener("input", (e) => {
+    input.addEventListener("input", async (e) => {
       const text = this.extractText(e.target as HTMLElement);
       if (text === this.lastCapturedText) return;
       
       this.lastCapturedText = text;
 
-      this.sendToBackground({
+      const response = await this.sendToBackground({
         type: "PROMPT_CHANGED",
         payload: {
           ...this.adapter.capturePrompt(text),
-          draftId: "", // Resolved by background
+          draftId: this.currentDraftId,
           previousPromptText: "", // Not tracked here yet
         }
       });
+
+      if (response && response.draftId) {
+        this.currentDraftId = response.draftId;
+      }
     });
 
     // Monitor for submissions
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
-        const text = this.extractText(e.target as HTMLElement);
-        this.sendToBackground({
-          type: "PROMPT_SUBMITTED",
-          payload: {
-            ...this.adapter.capturePrompt(text),
-            draftId: "",
-            submittedAt: new Date().toISOString(),
+        if (e.isComposing) return;
+        const textBefore = this.extractText(e.target as HTMLElement);
+        if (!textBefore.trim()) return;
+
+        // Delay submission check to see if the host app consumed the event (cleared the input)
+        setTimeout(() => {
+          const textAfter = this.extractText(e.target as HTMLElement);
+          if (textAfter.trim() === "") {
+            this.sendToBackground({
+              type: "PROMPT_SUBMITTED",
+              payload: {
+                ...this.adapter.capturePrompt(textBefore),
+                draftId: this.currentDraftId,
+                submittedAt: new Date().toISOString(),
+              }
+            });
           }
-        });
+        }, 100);
+      }
+    }, { capture: true });
+
+    // Listen for patch applications from the sidepanel
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      if (message.type === "APPLY_PATCH") {
+        const patch = message.payload?.patch;
+        const targetInput = this.adapter.findPromptInput();
+        
+        if (targetInput && patch?.replaceText !== undefined) {
+          if (targetInput instanceof HTMLTextAreaElement || targetInput instanceof HTMLInputElement) {
+            targetInput.value = patch.replaceText;
+          } else {
+            targetInput.textContent = patch.replaceText;
+          }
+          
+          targetInput.dispatchEvent(new Event("input", { bubbles: true }));
+          sendResponse({ success: true });
+        }
       }
     });
   }
@@ -62,7 +95,9 @@ export class CaptureEngine {
     return el.innerText || el.textContent || "";
   }
 
-  private sendToBackground(event: any) {
-    chrome.runtime.sendMessage(event);
+  private sendToBackground(event: ExtensionEvent): Promise<any> {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage(event, resolve);
+    });
   }
 }

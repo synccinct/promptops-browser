@@ -3,20 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "@optiprompt/domain": "*",
     "@optiprompt/schemas": "*",
-    "@optiprompt/sdk": "*",
-    "lucide-react": "^1.14.0",
+    "lucide-react": "^0.400.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.15.0"
   },
   "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.33",
     "@types/chrome": "^0.0.268",
-    "typescript": "^5"
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "^5",
+    "vite": "^8.0.12"
   }
 }

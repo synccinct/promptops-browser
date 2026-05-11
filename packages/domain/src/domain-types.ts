@@ -20,25 +20,7 @@ export interface Membership {
   createdAt: string;
 }
 
-export interface PromptVariable {
-  name: string;
-  required: boolean;
-  defaultValue?: string;
-}
-
-export interface PromptStructure {
-  intent?: string;
-  audience?: string;
-  constraints: string[];
-  outputFormat?: string;
-  examples: string[];
-  variables: PromptVariable[];
-  tools?: Array<{
-    name: string;
-    description: string;
-    parameters: Record<string, unknown>;
-  }>;
-}
+export type { PromptVariable, PromptStructure } from "@optiprompt/schemas";
 
 export interface PromptAsset {
   id: string;
@@ -88,50 +70,11 @@ export interface PromptDraft {
   createdAt: string;
 }
 
-export interface PromptPatch {
-  replaceText?: string;
-  insertions?: Array<{ at: number; text: string }>;
-}
-
-export interface SuggestionScores {
-  clarity: number;
-  specificity: number;
-  completeness: number;
-  modelFit: number;
-}
-
-export interface SuggestionCard {
-  id: string;
-  kind: SuggestionCardKind;
-  title: string;
-  message: string;
-  actionLabel?: string;
-  actionPatch?: PromptPatch;
-}
-
-export interface PromptVariant {
-  id: string;
-  label: string;
-  strategy: VariantStrategy;
-  promptText: string;
-}
-
-export interface SuggestionTrace {
-  nodeId: string;
-  reason: string;
-  state: "cached" | "updated" | "pending" | "failed";
-}
-
-export interface SuggestionEnvelope {
-  id: string;
-  sessionId: string;
-  promptDraftId: string;
-  promptVersionId?: string;
-  status: SuggestionStatus;
-  scores: SuggestionScores;
-  cards: SuggestionCard[];
-  variants: PromptVariant[];
-  trace: SuggestionTrace[];
-  createdAt: Date;
-  updatedAt: Date;
-}
+export type {
+  PromptPatch,
+  SuggestionScores,
+  SuggestionCard,
+  PromptVariant,
+  SuggestionTrace,
+  SuggestionEnvelope
+} from "@optiprompt/schemas";

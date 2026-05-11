@@ -12,3 +12,17 @@ export const SuggestionsRequestSchema = z.object({
 export const SuggestionsResponseSchema = z.object({
   envelope: SuggestionEnvelopeSchema,
 });
+
+export const SyncSessionRequestSchema = z.object({
+  sessionId: z.string(),
+  sourceSite: z.string(),
+  tabUrl: z.string().url(),
+  conversationTitle: z.string().optional().nullable(),
+  workspaceId: z.string().optional(),
+});
+
+export const RecordDraftRequestSchema = z.object({
+  draftId: z.string(),
+  rawText: z.string(),
+  normalizedText: z.string(),
+});

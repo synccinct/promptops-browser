@@ -4,19 +4,19 @@ export declare const RequestSuggestionsPayloadSchema: z.ZodObject<{
     draftId: z.ZodString;
     workspaceId: z.ZodOptional<z.ZodString>;
     modelProfile: z.ZodString;
-    promptText: z.ZodOptional<z.ZodString>;
+    promptText: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    promptText: string;
     sessionId: string;
     draftId: string;
     modelProfile: string;
     workspaceId?: string | undefined;
-    promptText?: string | undefined;
 }, {
+    promptText: string;
     sessionId: string;
     draftId: string;
     modelProfile: string;
     workspaceId?: string | undefined;
-    promptText?: string | undefined;
 }>;
 export declare const PromptCapturedPayloadSchema: z.ZodObject<{
     sessionId: z.ZodString;
@@ -26,15 +26,15 @@ export declare const PromptCapturedPayloadSchema: z.ZodObject<{
     conversationTitle: z.ZodNullable<z.ZodOptional<z.ZodString>>;
     capturedAt: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    sessionId: string;
     promptText: string;
+    sessionId: string;
     sourceSite: string;
     tabUrl: string;
     capturedAt: string;
     conversationTitle?: string | null | undefined;
 }, {
-    sessionId: string;
     promptText: string;
+    sessionId: string;
     sourceSite: string;
     tabUrl: string;
     capturedAt: string;

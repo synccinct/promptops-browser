@@ -49,8 +49,13 @@ export const SuggestionEnvelopeSchema = z.object({
   cards: z.array(SuggestionCardSchema),
   variants: z.array(PromptVariantSchema),
   trace: z.array(SuggestionTraceSchema),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.string().datetime(),
+  updatedAt: z.string().datetime(),
 });
 
-export type ZodSuggestionEnvelope = z.infer<typeof SuggestionEnvelopeSchema>;
+export type PromptPatch = z.infer<typeof PromptPatchSchema>;
+export type SuggestionScores = z.infer<typeof SuggestionScoresSchema>;
+export type SuggestionCard = z.infer<typeof SuggestionCardSchema>;
+export type PromptVariant = z.infer<typeof PromptVariantSchema>;
+export type SuggestionTrace = z.infer<typeof SuggestionTraceSchema>;
+export type SuggestionEnvelope = z.infer<typeof SuggestionEnvelopeSchema>;

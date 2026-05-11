@@ -1,4 +1,4 @@
-import { ZodSuggestionEnvelope, SuggestionEnvelopeSchema } from "@optiprompt/schemas";
+import { SuggestionEnvelope, SuggestionEnvelopeSchema } from "@optiprompt/schemas";
 import { callOpenAIStructured } from "../../lib/openai/structured-output";
 import { saveSuggestionEnvelope } from "../repositories/suggestion-envelope-repository";
 
@@ -11,7 +11,7 @@ interface SuggestionRequest {
   promptText?: string;
 }
 
-export async function generateSuggestions(req: SuggestionRequest): Promise<ZodSuggestionEnvelope> {
+export async function generateSuggestions(req: SuggestionRequest): Promise<SuggestionEnvelope> {
   const { sessionId, draftId, promptText } = req;
   const prompt = promptText || "No prompt text provided.";
 
@@ -25,12 +25,13 @@ Return a highly structured JSON response strictly adhering to the SuggestionEnve
   const modelResponse = await callOpenAIStructured(systemPrompt, prompt);
   
   // Combine model response with session routing metadata
-  const envelope: ZodSuggestionEnvelope = {
+  const envelope: SuggestionEnvelope = {
     ...modelResponse,
     id: crypto.randomUUID(),
     sessionId,
     promptDraftId: draftId,
     createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
 
   // Validate to guarantee strict contracts

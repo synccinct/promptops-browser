@@ -22,4 +22,6 @@ export const PromptStructureSchema = z.object({
   tools: z.array(ToolDefinitionSchema).optional(),
 });
 
-export type ZodPromptStructure = z.infer<typeof PromptStructureSchema>;
+export type PromptVariable = z.infer<typeof PromptVariableSchema>;
+export type ToolDefinition = z.infer<typeof ToolDefinitionSchema>;
+export type PromptStructure = z.infer<typeof PromptStructureSchema>;

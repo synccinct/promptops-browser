@@ -14,7 +14,6 @@
   "include": ["src/**/*"],
   "references": [
     { "path": "../../packages/domain" },
-    { "path": "../../packages/schemas" },
-    { "path": "../../packages/sdk" }
+    { "path": "../../packages/schemas" }
   ]
 }
