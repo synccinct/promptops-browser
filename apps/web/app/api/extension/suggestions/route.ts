@@ -1,55 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
+import { RequestSuggestionsPayloadSchema } from "@optiprompt/schemas";
+import { generateSuggestions } from "../../../../server/services/suggestions-service";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
+    
+    // 1. Parse and validate request
+    const parsed = RequestSuggestionsPayloadSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid payload", details: parsed.error }, { status: 400 });
+    }
 
-  const response = {
-    id: crypto.randomUUID(),
-    sessionId: body.sessionId,
-    promptDraftId: body.draftId,
-    status: "ready",
-    scores: {
-      clarity: 0.74,
-      specificity: 0.62,
-      completeness: 0.58,
-      modelFit: 0.80,
-    },
-    cards: [
-      {
-        id: crypto.randomUUID(),
-        kind: "context",
-        title: "Add missing context",
-        message: "Specify audience, output shape, and any non-negotiable constraints.",
-        actionLabel: "Insert structure",
-      },
-      {
-        id: crypto.randomUUID(),
-        kind: "format",
-        title: "Request a structured response",
-        message: "Ask for bullets, JSON, or a fixed template to make outputs more reusable.",
-        actionLabel: "Add format clause",
-      },
-    ],
-    variants: [
-      {
-        id: crypto.randomUUID(),
-        label: "Structured",
-        strategy: "structured",
-        promptText: `${body.promptText ?? ""}\n\nReturn the result as:\n- Objective\n- Constraints\n- Output\n- Edge cases`,
-      },
-      {
-        id: crypto.randomUUID(),
-        label: "Concise",
-        strategy: "concise",
-        promptText: `${body.promptText ?? ""}\n\nBe concise and explicit.`,
-      },
-    ],
-    trace: [
-      { nodeId: "constraintParse", reason: "Prompt changed", state: "updated" },
-      { nodeId: "formatParse", reason: "No explicit output format detected", state: "updated" },
-    ],
-    createdAt: new Date().toISOString(),
-  };
+    // 2. Authenticate (Mocked for now)
+    const userId = "mock-user-id";
+    const workspaceId = parsed.data.workspaceId || "default-workspace";
 
-  return NextResponse.json(response);
+    // 3. Call the core service
+    const suggestionEnvelope = await generateSuggestions({
+      ...parsed.data,
+      userId,
+      workspaceId,
+    });
+
+    // 4. Return the standard contract
+    return NextResponse.json(suggestionEnvelope);
+  } catch (error: any) {
+    console.error("[Suggestions API] Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
 }

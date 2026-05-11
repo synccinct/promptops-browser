@@ -1,1 +1,5 @@
-// SDK: Extension Messaging`nexport interface MessageEnvelope {`n  type: string;`n  payload?: any;`n}
+// SDK: Extension Messaging
+export interface MessageEnvelope {
+  type: string;
+  payload?: any;
+}

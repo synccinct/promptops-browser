@@ -5,6 +5,7 @@ export const RequestSuggestionsPayloadSchema = z.object({
   draftId: z.string(),
   workspaceId: z.string().optional(),
   modelProfile: z.string(),
+  promptText: z.string().optional(),
 });
 
 export const PromptCapturedPayloadSchema = z.object({

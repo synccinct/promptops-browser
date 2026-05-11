@@ -1,0 +1,19 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/experiments/[experimentId]/run/route": "app/api/experiments/[experimentId]/run/route.js",
+  "/api/extension/draft/route": "app/api/extension/draft/route.js",
+  "/api/experiments/route": "app/api/experiments/route.js",
+  "/api/extension/session/start/route": "app/api/extension/session/start/route.js",
+  "/api/extension/suggestion-decision/route": "app/api/extension/suggestion-decision/route.js",
+  "/api/extension/suggestions/route": "app/api/extension/suggestions/route.js",
+  "/api/prompts/[promptId]/route": "app/api/prompts/[promptId]/route.js",
+  "/api/extension/sync/route": "app/api/extension/sync/route.js",
+  "/api/prompts/[promptId]/versions/route": "app/api/prompts/[promptId]/versions/route.js",
+  "/api/prompts/route": "app/api/prompts/route.js",
+  "/api/sessions/[sessionId]/route": "app/api/sessions/[sessionId]/route.js",
+  "/api/sessions/route": "app/api/sessions/route.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/experiments/page": "app/experiments/page.js",
+  "/prompts/page": "app/prompts/page.js",
+  "/prompts/[promptId]/page": "app/prompts/[promptId]/page.js"
+}

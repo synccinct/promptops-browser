@@ -13,7 +13,8 @@
     "react": "^18",
     "react-dom": "^18",
     "@optiprompt/domain": "*",
-    "@optiprompt/schemas": "*"
+    "@optiprompt/schemas": "*",
+    "@optiprompt/ui": "*"
   },
   "devDependencies": {
     "typescript": "^5",

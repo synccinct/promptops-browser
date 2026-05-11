@@ -1,1 +1,2 @@
-// SDK: API Client for web backend`nexport class ApiClient {}
+// SDK: API Client for web backend
+export class ApiClient {}
