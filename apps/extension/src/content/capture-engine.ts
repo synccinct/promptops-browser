@@ -13,6 +13,15 @@ export class CaptureEngine {
       return;
     }
 
+    // Initial capture to start the session
+    const text = this.extractText(input);
+    this.sendToBackground({
+      type: "PROMPT_CAPTURED",
+      payload: {
+        ...this.adapter.capturePrompt(text),
+      }
+    });
+
     // Monitor for changes
     input.addEventListener("input", (e) => {
       const text = this.extractText(e.target as HTMLElement);

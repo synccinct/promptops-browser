@@ -12,6 +12,19 @@ export declare const PromptVariableSchema: z.ZodObject<{
     required: boolean;
     defaultValue?: string | undefined;
 }>;
+export declare const ToolDefinitionSchema: z.ZodObject<{
+    name: z.ZodString;
+    description: z.ZodString;
+    parameters: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+}, "strip", z.ZodTypeAny, {
+    name: string;
+    description: string;
+    parameters: Record<string, unknown>;
+}, {
+    name: string;
+    description: string;
+    parameters: Record<string, unknown>;
+}>;
 export declare const PromptStructureSchema: z.ZodObject<{
     intent: z.ZodOptional<z.ZodString>;
     audience: z.ZodOptional<z.ZodString>;
@@ -31,6 +44,19 @@ export declare const PromptStructureSchema: z.ZodObject<{
         required: boolean;
         defaultValue?: string | undefined;
     }>, "many">;
+    tools: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        name: z.ZodString;
+        description: z.ZodString;
+        parameters: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        description: string;
+        parameters: Record<string, unknown>;
+    }, {
+        name: string;
+        description: string;
+        parameters: Record<string, unknown>;
+    }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     constraints: string[];
     examples: string[];
@@ -42,6 +68,11 @@ export declare const PromptStructureSchema: z.ZodObject<{
     intent?: string | undefined;
     audience?: string | undefined;
     outputFormat?: string | undefined;
+    tools?: {
+        name: string;
+        description: string;
+        parameters: Record<string, unknown>;
+    }[] | undefined;
 }, {
     constraints: string[];
     examples: string[];
@@ -53,5 +84,10 @@ export declare const PromptStructureSchema: z.ZodObject<{
     intent?: string | undefined;
     audience?: string | undefined;
     outputFormat?: string | undefined;
+    tools?: {
+        name: string;
+        description: string;
+        parameters: Record<string, unknown>;
+    }[] | undefined;
 }>;
 export type ZodPromptStructure = z.infer<typeof PromptStructureSchema>;

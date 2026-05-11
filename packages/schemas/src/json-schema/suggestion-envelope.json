@@ -1,81 +1,211 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "id": { "type": "string" },
-    "sessionId": { "type": "string" },
-    "promptDraftId": { "type": "string" },
-    "status": {
-      "type": "string",
-      "enum": ["pending", "ready", "failed"]
-    },
-    "scores": {
+  "$ref": "#/definitions/suggestion-envelope",
+  "definitions": {
+    "suggestion-envelope": {
       "type": "object",
       "properties": {
-        "clarity": { "type": "number", "minimum": 0, "maximum": 100 },
-        "specificity": { "type": "number", "minimum": 0, "maximum": 100 },
-        "completeness": { "type": "number", "minimum": 0, "maximum": 100 },
-        "modelFit": { "type": "number", "minimum": 0, "maximum": 100 }
-      },
-      "required": ["clarity", "specificity", "completeness", "modelFit"]
-    },
-    "cards": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string" },
-          "kind": { "type": "string", "enum": ["constraint", "context", "format", "model-fit", "risk"] },
-          "title": { "type": "string" },
-          "message": { "type": "string" },
-          "actionLabel": { "type": "string" },
-          "actionPatch": {
+        "id": {
+          "type": "string"
+        },
+        "sessionId": {
+          "type": "string"
+        },
+        "promptDraftId": {
+          "type": "string"
+        },
+        "promptVersionId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "ready",
+            "failed"
+          ]
+        },
+        "scores": {
+          "type": "object",
+          "properties": {
+            "clarity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "specificity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "completeness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "modelFit": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "clarity",
+            "specificity",
+            "completeness",
+            "modelFit"
+          ],
+          "additionalProperties": false
+        },
+        "cards": {
+          "type": "array",
+          "items": {
             "type": "object",
             "properties": {
-              "replaceText": { "type": "string" },
-              "insertions": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "at": { "type": "number" },
-                    "text": { "type": "string" }
+              "id": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "constraint",
+                  "context",
+                  "format",
+                  "model-fit",
+                  "risk"
+                ]
+              },
+              "title": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "actionLabel": {
+                "type": "string"
+              },
+              "actionPatch": {
+                "type": "object",
+                "properties": {
+                  "replaceText": {
+                    "type": "string"
                   },
-                  "required": ["at", "text"]
-                }
+                  "insertions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "at": {
+                          "type": "number"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "at",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
               }
-            }
+            },
+            "required": [
+              "id",
+              "kind",
+              "title",
+              "message"
+            ],
+            "additionalProperties": false
           }
         },
-        "required": ["id", "kind", "title", "message"]
-      }
-    },
-    "variants": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string" },
-          "label": { "type": "string" },
-          "strategy": { "type": "string", "enum": ["concise", "structured", "model-specific", "safer"] },
-          "promptText": { "type": "string" }
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "strategy": {
+                "type": "string",
+                "enum": [
+                  "concise",
+                  "structured",
+                  "model-specific",
+                  "safer"
+                ]
+              },
+              "promptText": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "strategy",
+              "promptText"
+            ],
+            "additionalProperties": false
+          }
         },
-        "required": ["id", "label", "strategy", "promptText"]
-      }
-    },
-    "trace": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "nodeId": { "type": "string" },
-          "reason": { "type": "string" },
-          "state": { "type": "string", "enum": ["cached", "updated", "pending", "failed"] }
+        "trace": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "nodeId": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "cached",
+                  "updated",
+                  "pending",
+                  "failed"
+                ]
+              }
+            },
+            "required": [
+              "nodeId",
+              "reason",
+              "state"
+            ],
+            "additionalProperties": false
+          }
         },
-        "required": ["nodeId", "reason", "state"]
-      }
-    },
-    "createdAt": { "type": "string", "format": "date-time" }
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "sessionId",
+        "promptDraftId",
+        "status",
+        "scores",
+        "cards",
+        "variants",
+        "trace",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    }
   },
-  "required": ["id", "sessionId", "promptDraftId", "status", "scores", "cards", "variants", "trace", "createdAt"]
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

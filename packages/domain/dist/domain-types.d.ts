@@ -29,6 +29,11 @@ export interface PromptStructure {
     outputFormat?: string;
     examples: string[];
     variables: PromptVariable[];
+    tools?: Array<{
+        name: string;
+        description: string;
+        parameters: Record<string, unknown>;
+    }>;
 }
 export interface PromptAsset {
     id: string;
@@ -51,7 +56,8 @@ export interface PromptVersion {
     rawText: string;
     normalizedText: string;
     structure: PromptStructure;
-    modelProfile: string | null;
+    modelId: string | null;
+    score: number | null;
     summary: string | null;
     createdBy: string;
     createdAt: string;
@@ -109,10 +115,12 @@ export interface SuggestionEnvelope {
     id: string;
     sessionId: string;
     promptDraftId: string;
+    promptVersionId?: string;
     status: SuggestionStatus;
     scores: SuggestionScores;
     cards: SuggestionCard[];
     variants: PromptVariant[];
     trace: SuggestionTrace[];
-    createdAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

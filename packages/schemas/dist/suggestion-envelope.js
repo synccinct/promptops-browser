@@ -38,10 +38,12 @@ exports.SuggestionEnvelopeSchema = zod_1.z.object({
     id: zod_1.z.string(),
     sessionId: zod_1.z.string(),
     promptDraftId: zod_1.z.string(),
+    promptVersionId: zod_1.z.string().optional(),
     status: zod_1.z.enum(["pending", "ready", "failed"]),
     scores: exports.SuggestionScoresSchema,
     cards: zod_1.z.array(exports.SuggestionCardSchema),
     variants: zod_1.z.array(exports.PromptVariantSchema),
     trace: zod_1.z.array(exports.SuggestionTraceSchema),
-    createdAt: zod_1.z.string().datetime(),
+    createdAt: zod_1.z.date(),
+    updatedAt: zod_1.z.date(),
 });

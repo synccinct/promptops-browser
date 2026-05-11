@@ -131,6 +131,7 @@ export declare const SuggestionEnvelopeSchema: z.ZodObject<{
     id: z.ZodString;
     sessionId: z.ZodString;
     promptDraftId: z.ZodString;
+    promptVersionId: z.ZodOptional<z.ZodString>;
     status: z.ZodEnum<["pending", "ready", "failed"]>;
     scores: z.ZodObject<{
         clarity: z.ZodNumber;
@@ -235,7 +236,8 @@ export declare const SuggestionEnvelopeSchema: z.ZodObject<{
         reason: string;
         state: "cached" | "updated" | "pending" | "failed";
     }>, "many">;
-    createdAt: z.ZodString;
+    createdAt: z.ZodDate;
+    updatedAt: z.ZodDate;
 }, "strip", z.ZodTypeAny, {
     status: "pending" | "failed" | "ready";
     id: string;
@@ -272,7 +274,9 @@ export declare const SuggestionEnvelopeSchema: z.ZodObject<{
         reason: string;
         state: "cached" | "updated" | "pending" | "failed";
     }[];
-    createdAt: string;
+    createdAt: Date;
+    updatedAt: Date;
+    promptVersionId?: string | undefined;
 }, {
     status: "pending" | "failed" | "ready";
     id: string;
@@ -309,6 +313,8 @@ export declare const SuggestionEnvelopeSchema: z.ZodObject<{
         reason: string;
         state: "cached" | "updated" | "pending" | "failed";
     }[];
-    createdAt: string;
+    createdAt: Date;
+    updatedAt: Date;
+    promptVersionId?: string | undefined;
 }>;
 export type ZodSuggestionEnvelope = z.infer<typeof SuggestionEnvelopeSchema>;

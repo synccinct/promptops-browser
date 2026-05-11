@@ -4,8 +4,17 @@
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc && npm run generate-schemas",
+    "dev": "tsc --watch",
+    "generate-schemas": "tsx scripts/generate.ts"
+  },
   "dependencies": {
+    "@optiprompt/domain": "*",
     "zod": "^3.23.8",
-    "@optiprompt/domain": "*"
+    "zod-to-json-schema": "^3.25.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
   }
 }

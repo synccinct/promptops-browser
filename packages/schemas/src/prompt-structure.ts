@@ -6,6 +6,12 @@ export const PromptVariableSchema = z.object({
   defaultValue: z.string().optional(),
 });
 
+export const ToolDefinitionSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  parameters: z.record(z.unknown()),
+});
+
 export const PromptStructureSchema = z.object({
   intent: z.string().optional(),
   audience: z.string().optional(),
@@ -13,6 +19,7 @@ export const PromptStructureSchema = z.object({
   outputFormat: z.string().optional(),
   examples: z.array(z.string()),
   variables: z.array(PromptVariableSchema),
+  tools: z.array(ToolDefinitionSchema).optional(),
 });
 
 export type ZodPromptStructure = z.infer<typeof PromptStructureSchema>;

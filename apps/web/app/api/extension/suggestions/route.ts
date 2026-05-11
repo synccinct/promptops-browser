@@ -1,32 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
-import { RequestSuggestionsPayloadSchema } from "@optiprompt/schemas";
 import { generateSuggestions } from "../../../../server/services/suggestions-service";
+import { RequestSuggestionsSchema } from "@optiprompt/schemas";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     
-    // 1. Parse and validate request
-    const parsed = RequestSuggestionsPayloadSchema.safeParse(body);
-    if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid payload", details: parsed.error }, { status: 400 });
-    }
+    // Validate request
+    const validated = RequestSuggestionsSchema.parse(body);
 
-    // 2. Authenticate (Mocked for now)
-    const userId = "mock-user-id";
-    const workspaceId = parsed.data.workspaceId || "default-workspace";
+    // In a real app, resolve userId and workspaceId from auth session
+    const userId = "test-user";
+    const workspaceId = validated.workspaceId || "test-workspace";
 
-    // 3. Call the core service
-    const suggestionEnvelope = await generateSuggestions({
-      ...parsed.data,
+    // Generate suggestions
+    const envelope = await generateSuggestions({
+      ...validated,
       userId,
       workspaceId,
+      promptText: (body as any).promptText, // Pass prompt text if available for the mock
     });
 
-    // 4. Return the standard contract
-    return NextResponse.json(suggestionEnvelope);
-  } catch (error: any) {
-    console.error("[Suggestions API] Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(envelope);
+  } catch (error) {
+    console.error("[API] Suggestions Error:", error);
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 400 }
+    );
   }
 }

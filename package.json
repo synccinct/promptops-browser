@@ -5,9 +5,13 @@
     "apps/*",
     "packages/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=@optiprompt/web\" \"npm run dev --workspace=@optiprompt/extension\"",
+    "build": "npm run build --workspaces"
+  },
   "devDependencies": {
     "@types/chrome": "^0.1.42",
+    "concurrently": "^9.2.1",
     "typescript": "^6.0.3",
     "zod": "^4.4.3"
   }

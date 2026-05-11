@@ -43,12 +43,14 @@ export const SuggestionEnvelopeSchema = z.object({
   id: z.string(),
   sessionId: z.string(),
   promptDraftId: z.string(),
+  promptVersionId: z.string().optional(),
   status: z.enum(["pending", "ready", "failed"]),
   scores: SuggestionScoresSchema,
   cards: z.array(SuggestionCardSchema),
   variants: z.array(PromptVariantSchema),
   trace: z.array(SuggestionTraceSchema),
-  createdAt: z.string().datetime(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });
 
 export type ZodSuggestionEnvelope = z.infer<typeof SuggestionEnvelopeSchema>;
