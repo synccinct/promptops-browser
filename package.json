@@ -1,0 +1,14 @@
+{
+  "name": "optiprompt",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {},
+  "devDependencies": {
+    "@types/chrome": "^0.1.42",
+    "typescript": "^6.0.3",
+    "zod": "^4.4.3"
+  }
+}

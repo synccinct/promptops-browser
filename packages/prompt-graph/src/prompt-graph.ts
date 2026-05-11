@@ -99,7 +99,7 @@ export async function computeNode<T>(
   const deps: Record<string, unknown> = {};
   for (const dep of node.deps) deps[dep] = graph[dep]?.value;
 
-  const result = await def.compute(node.id, deps, ctx);
+  const result = await def.compute(node.id, deps, ctx) as ComputeResult<T>;
   return {
     node: applyNodeResult(node, result),
     patchHints: result.patchHints ?? [],
