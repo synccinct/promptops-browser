@@ -20,7 +20,8 @@ export interface Membership {
   createdAt: string;
 }
 
-export type { PromptVariable, PromptStructure } from "@optiprompt/schemas";
+import type { PromptVariable, PromptStructure } from "@optiprompt/schemas";
+export type { PromptVariable, PromptStructure };
 
 export interface PromptAsset {
   id: string;
@@ -58,6 +59,8 @@ export interface PromptSession {
   sourceSite: string;
   tabUrl: string;
   conversationTitle: string | null;
+  /** Extension-only: the Chrome tab ID associated with this session. Not persisted to DB. */
+  tabId?: number;
   startedAt: string;
   lastSeenAt: string;
 }

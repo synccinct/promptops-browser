@@ -26,3 +26,17 @@ export const RecordDraftRequestSchema = z.object({
   rawText: z.string(),
   normalizedText: z.string(),
 });
+
+export const SessionStartSchema = z.object({
+  sessionId: z.string(),
+  sourceSite: z.string(),
+  tabUrl: z.string().url(),
+  conversationTitle: z.string().optional().nullable(),
+});
+
+export const ExtensionRecordDraftSchema = z.object({
+  sessionId: z.string(),
+  draftId: z.string(),
+  rawText: z.string(),
+  normalizedText: z.string(),
+});

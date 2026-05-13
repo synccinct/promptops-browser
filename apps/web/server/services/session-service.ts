@@ -1,4 +1,4 @@
-import { upsertSession, PromptSession } from "../repositories/prompt-session-repository";
+import { upsertSession, PromptSession, getSessionById } from "../repositories/prompt-session-repository";
 import { saveDraft, PromptDraft } from "../repositories/prompt-draft-repository";
 
 interface SyncSessionRequest {
@@ -23,6 +23,10 @@ export async function syncSession(req: SyncSessionRequest): Promise<PromptSessio
   };
 
   return await upsertSession(sessionData);
+}
+
+export async function getSession(sessionId: string): Promise<PromptSession | null> {
+  return await getSessionById(sessionId);
 }
 
 interface RecordDraftRequest {

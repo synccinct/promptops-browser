@@ -19,6 +19,7 @@ export interface RequestSuggestionsPayload {
     draftId: string;
     workspaceId?: string;
     modelProfile: string;
+    promptText: string;
 }
 export interface SuggestionsReadyPayload {
     sessionId: string;
@@ -49,6 +50,9 @@ export interface SyncFlushRequestedPayload {
     reason: "manual" | "interval" | "online";
     requestedAt: string;
 }
+export interface ApplyPatchPayload {
+    patch: PromptPatch;
+}
 export type ExtensionEvent = {
     type: "PROMPT_CAPTURED";
     payload: PromptCapturedPayload;
@@ -76,4 +80,7 @@ export type ExtensionEvent = {
 } | {
     type: "SYNC_FLUSH_REQUESTED";
     payload: SyncFlushRequestedPayload;
+} | {
+    type: "APPLY_PATCH";
+    payload: ApplyPatchPayload;
 };

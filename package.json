@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace=@optiprompt/web\" \"npm run dev --workspace=@optiprompt/extension\"",
+    "dev": "concurrently \"npm run dev -w @optiprompt/web\" \"npm run dev -w @optiprompt/extension\"",
     "build": "npm run build --workspaces"
   },
   "devDependencies": {

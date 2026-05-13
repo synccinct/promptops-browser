@@ -3,13 +3,17 @@
   "name": "OptiPrompt",
   "version": "0.1.0",
   "description": "Browser-first PromptOps assistant for live prompt optimization, versioning, and reusable prompt assets.",
-  "permissions": ["storage", "activeTab", "scripting", "sidePanel", "tabs"],
+  "permissions": ["storage", "activeTab", "scripting", "sidePanel", "tabs", "cookies"],
   "host_permissions": [
     "https://chatgpt.com/*",
     "https://claude.ai/*",
     "https://gemini.google.com/*",
-    "https://www.perplexity.ai/*"
+    "https://www.perplexity.ai/*",
+    "http://localhost/*"
   ],
+  "externally_connectable": {
+    "matches": ["http://localhost/*"]
+  },
   "background": {
     "service_worker": "src/background/index.js",
     "type": "module"

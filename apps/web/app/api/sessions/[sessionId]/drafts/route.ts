@@ -1,19 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "../../../../../lib/auth/get-session";
+import { NextResponse } from "next/server";
 import { RecordDraftRequestSchema } from "@optiprompt/schemas";
 import { recordDraft } from "../../../../../server/services/session-service";
+import { withExtensionAuth } from "../../../../../lib/auth/with-extension-auth";
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export const POST = withExtensionAuth(async (req, { params, auth }) => {
   try {
-    const authSession = await getSession(req);
-    if (!authSession || !authSession.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const sessionId = params.id;
+    const { sessionId } = params;
     if (!sessionId) {
       return NextResponse.json({ error: "Missing session ID" }, { status: 400 });
     }
@@ -30,10 +22,10 @@ export async function POST(
 
     return NextResponse.json({ draft });
   } catch (error) {
-    console.error(`[API] Drafts Error (Session: ${params.id}):`, error);
+    console.error(`[API] Drafts Error (Session: ${params.sessionId}):`, error);
     return NextResponse.json(
       { error: (error as Error).message },
       { status: 400 }
     );
   }
-}
+});

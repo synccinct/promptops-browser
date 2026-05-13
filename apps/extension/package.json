@@ -19,6 +19,6 @@
     "@types/chrome": "^0.0.268",
     "@vitejs/plugin-react": "^6.0.1",
     "typescript": "^5",
-    "vite": "^8.0.12"
+    "vite": "^6.0.0"
   }
 }
